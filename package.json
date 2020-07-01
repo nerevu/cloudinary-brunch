@@ -1,0 +1,34 @@
+{
+  "name": "cloudinary-brunch",
+  "version": "1.0.0",
+  "description": "Simple cloudinary uploader for brunch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+@github.com:nerevu/cloudinary-brunch.git"
+  },
+  "keywords": [
+    "brunch",
+    "brunchplugin",
+    "cloudinary",
+    "image",
+    "photo",
+    "optimize",
+    "optimise"
+  ],
+  "author": "Nerevu <info@nerevu.com> (https://www.nerevu.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nerevu/cloudinary-brunch.git"
+  },
+  "homepage": "https://github.com/nerevu/cloudinary-brunch.git#readme",
+  "dependencies": {
+    "cloudinary": "^1.22.0",
+    "loggy": "^1.0.2",
+    "plur": "^2.1.2",
+    "pretty-bytes": "^4.0.2"
+  }
+}
