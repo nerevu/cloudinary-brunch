@@ -1,9 +1,11 @@
 {
-  "name": "cloudinary-brunch",
-  "version": "1.0.0",
+  "name": "@nerevu/cloudinary-brunch",
+  "version": "1.1.0",
   "description": "Simple cloudinary uploader for brunch",
   "main": "index.js",
   "scripts": {
+    "prettify": "prettier --write 'index.js'",
+    "lint": "eslint index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,15 +22,21 @@
     "optimise"
   ],
   "author": "Nerevu <info@nerevu.com> (https://www.nerevu.com/)",
-  "license": "MIT",
+  "license": "ICS",
   "bugs": {
-    "url": "https://github.com/nerevu/cloudinary-brunch.git"
+    "url": "https://github.com/nerevu/cloudinary-brunch/issues"
   },
-  "homepage": "https://github.com/nerevu/cloudinary-brunch.git#readme",
+  "homepage": "https://github.com/nerevu/cloudinary-brunch#readme",
   "dependencies": {
     "cloudinary": "^1.22.0",
     "loggy": "^1.0.2",
     "plur": "^2.1.2",
     "pretty-bytes": "^4.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^1.19.1"
   }
 }

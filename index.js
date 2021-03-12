@@ -1,101 +1,101 @@
 // Cloudinary Uploader
 
-// Import packages
-const fs = require('fs')
-const cloudinary = require('cloudinary')
-const loggy = require('loggy')
-const plur = require('plur')
-const prettyBytes = require('pretty-bytes')
+const fs = require("fs");
+const cloudinary = require("cloudinary").v2;
+const loggy = require("loggy");
+const plur = require("plur");
+const prettyBytes = require("pretty-bytes");
 
 // Set default configurations for Cloudinary
-const cloudinaryPattern = /\.(gif|jpg|jpeg|jpe|jif|jfif|jfi|png|svg|svgz)$/
-const cloudinaryOverwrite = true
-const cloudinaryPlugins = {}
+const cloudinaryPattern = /\.(gif|jpg|jpe|jpeg|png|webp|bmp|ps|ept|eps|pdf|psd|arw|cr2|svg|tif|tiff|webp)$/;
+const cloudinaryUseFilename = false;
+const cloudinaryUniqueFilename = true;
+const cloudinaryOverwrite = true;
 
-
-// Define the main app behavior
 exports = module.exports = class {
+  constructor(config) {
+    this.config = config.plugins.cloudinary || {};
 
-	// Configure the method
-	constructor(config) {
+    if (this.config.auth) {
+      auth = {
+        cloud_name: this.config.auth.cloudName,
+        api_key: this.config.auth.apiKey,
+        api_secret: this.config.auth.apiSecret
+      };
 
-		// Pass in the configuration
-		this.config = config.plugins.cloudinary || {}
+      cloudinary.config(auth);
+    }
 
+    this.config = Object.assign(
+      {},
+      {
+        pattern: cloudinaryPattern,
+        useFilename: cloudinaryUseFilename,
+        uniqueFilename: cloudinaryUniqueFilename,
+        overwrite: cloudinaryOverwrite,
+        transforms: []
+      },
+      this.config
+    );
 
-		// If new instance does not have plugins, create an empty one (???)
-		if(new Object(this.config.plugins) !== this.config.plugins)
-			this.config.plugins = {}
+    this.config.pattern = new RegExp(this.config.pattern);
+  }
 
-		// Pass the imageminPlugin to the app
-		this.config.plugins = Object.assign(
-			{}, cloudinaryPlugins, this.config.plugins
-		)
+  onCompile(err, assets) {
+    let startTime = Date.now();
+    let promises = [];
+    let oldBytes = 0;
+    let newBytes = 0;
 
-		// Initialize plugins
-		this.plugins = []
+    for (let asset of assets) {
+      if (!this.config.pattern.test(asset.destinationPath)) {
+        continue;
+      }
 
-		// Iterate through 
-		let pluginLoads = 0
-		for(let plugin in this.config.plugins) {
-			let options = this.config.plugins[plugin]
-			if(!options) continue
-			else pluginLoads++
-			try {
-				if(new Object(options) === options)
-					this.plugins.push(require(plugin)(options))
-				else
-					this.plugins.push(require(plugin)())
-			} catch(err) {
-				loggy.warn(`Loading of ${plugin} failed due to`, err.message)
-			}
-		}
+      promises.push(
+        new Promise((resolve, reject) => {
+          let data = Buffer.from(asset.compiled);
+          oldBytes += data.length;
 
-		if(!('pattern' in this.config)) this.config.pattern = cloudinaryPattern
-		this.config.pattern = new RegExp(this.config.pattern)
+          cloudinary.uploader.upload(
+            data,
+            {
+              resource_type: "photo",
+              folder: this.config.folder,
+              use_filename: this.config.useFilename,
+              unique_filename: this.config.uniqueFilename,
+              overwrite: this.config.overwrite
+              // notification_url: "https://mysite.example.com/notify_endpoint"
+            },
+            function(error, result) {
+              console.log(result, error);
+              newBytes += result.bytes;
+            }
+          );
+        })
+      );
+    }
 
-		if(!('overwrite' in this.config)) this.config.overwrite = cloudinaryOverwrite
-	}
+    Promise.all(promises)
+      .then(() => {
+        let elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+        let saved = prettyBytes(oldBytes - newBytes);
 
-	onCompile(err, assets) {
-		let startTime = Date.now()
-		let promises = []
-		let oldBytes = 0
-		let newBytes = 0
+        loggy.info(
+          `uploaded ${promises.length} ${plur(
+            "image",
+            promises.length
+          )} to save ${saved} in ${elapsed} sec`
+        );
+      })
+      .catch(err => {
+        loggy.error("Image cloudinary upload failed due to", err.message);
+      });
+  }
 
-		for(let asset of assets) {
-			if(!this.config.pattern.test(asset.destinationPath)) continue
-
-			promises.push(new Promise((res, rej) => {
-				let data = Buffer.from(asset.compiled)
-				oldBytes += data.length
-
-				// Call the Cloudinary uploader function
-				cloudinary.v2.uploader.upload(data,
-					{
-						resource_type: "photo",
-						public_id: this.config.public_id,
-						overwrite: this.config.overwrite,
-						// notification_url: "https://mysite.example.com/notify_endpoint"	// ???
-					},
-					function(error, result) {console.log(result, error)}
-				);
-			}))
-		}
-
-		Promise.all(promises).then(() => {
-			let elapsed = ((Date.now() - startTime)/1000).toFixed(1)
-			let saved = prettyBytes(oldBytes - newBytes)
-
-			loggy.info(`uploaded ${promises.length} ${plur('image', promises.length)} to save ${saved} in ${elapsed} sec`)
-		}).catch(err => {
-			loggy.error('Image cloudinary upload failed due to', err.message)
-		})
-	}
-
-	// Call javascript to optimize the file
-	optimize() {}
-}
+  // Call javascript to optimize the file
+  optimize() {}
+};
 
 // Classify the plugin as a brunchPlugin
-exports.prototype.brunchPlugin = true
+exports.prototype.brunchPlugin = true;
