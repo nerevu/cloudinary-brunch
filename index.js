@@ -59,7 +59,7 @@ exports = module.exports = class {
           cloudinary.uploader.upload(
             asset.path,
             {
-              resource_type: "photo",
+              resource_type: "image",
               folder: this.config.folder,
               use_filename: this.config.useFilename,
               unique_filename: this.config.uniqueFilename,
