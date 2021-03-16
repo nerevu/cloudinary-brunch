@@ -27,7 +27,6 @@ exports = module.exports = class {
     }
 
     this.config = Object.assign(
-      {},
       {
         pattern: cloudinaryPattern,
         useFilename: cloudinaryUseFilename,
