@@ -24,6 +24,10 @@ exports = module.exports = class {
       };
 
       cloudinary.config(auth);
+      loggy.info(`[cloudinary] configured for cloud ${auth.cloudName}`);
+    } else {
+      const cloudName = process.env.CLOUDINARY_URL.split("@").slice(-1)[0];
+      loggy.info(`[cloudinary] configured for cloud ${cloudName}`);
     }
 
     this.config = Object.assign(
@@ -81,14 +85,14 @@ exports = module.exports = class {
         let saved = prettyBytes(oldBytes - newBytes);
 
         loggy.info(
-          `uploaded ${promises.length} ${plur(
+          `[cloudinary] uploaded ${promises.length} ${plur(
             "image",
             promises.length
-          )} to save ${saved} in ${elapsed} sec`
+          )} and saved ${saved} in ${elapsed} sec`
         );
       })
       .catch(err => {
-        loggy.error("Image cloudinary upload failed due to", err.message);
+        loggy.error("[cloudinary] error while uploading images:", err.message);
       });
   }
 
