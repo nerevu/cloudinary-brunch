@@ -6,7 +6,7 @@ const loggy = require("loggy");
 const plur = require("plur");
 const prettyBytes = require("pretty-bytes");
 
-// Set default configurations for Cloudinary
+// Set default Cloudinary configuration
 const cloudinaryPattern = /\.(gif|jpg|jpe|jpeg|png|webp|bmp|ps|ept|eps|pdf|psd|arw|cr2|svg|tif|tiff|webp)$/;
 const cloudinaryUseFilename = false;
 const cloudinaryUniqueFilename = true;
@@ -65,7 +65,6 @@ exports = module.exports = class {
               use_filename: this.config.useFilename,
               unique_filename: this.config.uniqueFilename,
               overwrite: this.config.overwrite
-              // notification_url: "https://mysite.example.com/notify_endpoint"
             },
             function(error, result) {
               console.log(result, error);
@@ -93,9 +92,7 @@ exports = module.exports = class {
       });
   }
 
-  // Call javascript to optimize the file
   optimize() {}
 };
 
-// Classify the plugin as a brunchPlugin
 exports.prototype.brunchPlugin = true;
