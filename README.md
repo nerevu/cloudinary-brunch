@@ -31,7 +31,7 @@ If you are using the default skeleton, `npm run build` should also work.
 plugins.cloudinary = {
   auth: {},
   folder: null
-  useFilename: false
+  useFilename: true
   uniqueFilename: true
   overwrite: true
   transforms: [],

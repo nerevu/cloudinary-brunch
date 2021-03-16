@@ -8,7 +8,7 @@ const prettyBytes = require("pretty-bytes");
 
 // Set default Cloudinary configuration
 const cloudinaryPattern = /\.(gif|jpg|jpe|jpeg|png|webp|bmp|ps|ept|eps|pdf|psd|arw|cr2|svg|tif|tiff|webp)$/;
-const cloudinaryUseFilename = false;
+const cloudinaryUseFilename = true;
 const cloudinaryUniqueFilename = true;
 const cloudinaryOverwrite = true;
 
