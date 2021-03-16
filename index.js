@@ -32,6 +32,7 @@ exports = module.exports = class {
         useFilename: cloudinaryUseFilename,
         uniqueFilename: cloudinaryUniqueFilename,
         overwrite: cloudinaryOverwrite,
+        invalidate: cloudinaryOverwrite,
         transforms: []
       },
       this.config
