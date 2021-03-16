@@ -22,7 +22,7 @@
     "optimise"
   ],
   "author": "Nerevu <info@nerevu.com> (https://www.nerevu.com/)",
-  "license": "ICS",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/nerevu/cloudinary-brunch/issues"
   },
