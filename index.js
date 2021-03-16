@@ -67,8 +67,8 @@ exports = module.exports = class {
               overwrite: this.config.overwrite
             },
             function(error, result) {
-              console.log(result, error);
               newBytes += result.bytes;
+              error ? reject(error) : resolve(result);
             }
           );
         })
