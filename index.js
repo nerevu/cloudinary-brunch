@@ -57,7 +57,7 @@ exports = module.exports = class {
           oldBytes += data.length;
 
           cloudinary.uploader.upload(
-            data,
+            asset.path,
             {
               resource_type: "photo",
               folder: this.config.folder,
