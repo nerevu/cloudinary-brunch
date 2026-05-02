@@ -1,6 +1,5 @@
 // Cloudinary Uploader
 
-const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
 const loggy = require("loggy");
 const plur = require("plur");
@@ -15,6 +14,7 @@ const cloudinaryOverwrite = true;
 exports = module.exports = class {
   constructor(config) {
     this.config = config.plugins.cloudinary || {};
+    const cloudinaryURL = process.env.CLOUDINARY_URL;
 
     if (this.config.auth) {
       auth = {
@@ -25,9 +25,11 @@ exports = module.exports = class {
 
       cloudinary.config(auth);
       loggy.info(`[cloudinary] configured for cloud ${auth.cloudName}`);
-    } else {
-      const cloudName = process.env.CLOUDINARY_URL.split("@").slice(-1)[0];
+    } elif (cloudinaryURL) {
+      const cloudName = cloudinaryURL.split("@").slice(-1)[0];
       loggy.info(`[cloudinary] configured for cloud ${cloudName}`);
+    } else {
+      loggy.wwarn("[cloudinary] no configuration found! Try setting CLOUDINARY_URL env.");
     }
 
     this.config = Object.assign(
@@ -45,7 +47,7 @@ exports = module.exports = class {
     this.config.pattern = new RegExp(this.config.pattern);
   }
 
-  onCompile(err, assets) {
+  onCompile(files, assets) {
     let startTime = Date.now();
     let promises = [];
     let oldBytes = 0;
