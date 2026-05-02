@@ -32,13 +32,13 @@
   },
   "homepage": "https://github.com/nerevu/cloudinary-brunch#readme",
   "dependencies": {
-    "cloudinary": "^1.22.0",
+    "cloudinary": "^2.10.0",
     "loggy": "^1.0.2",
     "plur": "^2.1.2",
     "pretty-bytes": "^4.0.2"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^10.3.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.3.1",
     "prettier": "^1.19.1"
