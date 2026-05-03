@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+@github.com:nerevu/cloudinary-brunch.git"
+    "url": "git+ssh://git@github.com/nerevu/cloudinary-brunch.git"
   },
   "keywords": [
     "brunch",
