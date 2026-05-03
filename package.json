@@ -1,6 +1,6 @@
 {
   "name": "@nerevu/cloudinary-brunch",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "Simple cloudinary uploader for brunch",
   "main": "index.cjs",
   "type": "module",
