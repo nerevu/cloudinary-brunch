@@ -1,8 +1,9 @@
 {
   "name": "@nerevu/cloudinary-brunch",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Simple cloudinary uploader for brunch",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "prettify": "prettier --write 'index.js'",
     "lint": "eslint index.js",
@@ -10,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+@github.com:nerevu/cloudinary-brunch.git"
+    "url": "git+ssh://git@github.com/nerevu/cloudinary-brunch.git"
   },
   "keywords": [
     "brunch",
