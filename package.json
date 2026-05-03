@@ -1,12 +1,12 @@
 {
   "name": "@nerevu/cloudinary-brunch",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "Simple cloudinary uploader for brunch",
-  "main": "index.js",
+  "main": "index.cjs",
   "type": "module",
   "scripts": {
-    "prettify": "prettier --write 'index.js'",
-    "lint": "eslint index.js",
+    "prettify": "prettier --write 'index.cjs'",
+    "lint": "eslint index.cjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
