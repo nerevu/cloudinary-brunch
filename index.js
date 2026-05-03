@@ -25,7 +25,7 @@ exports = module.exports = class {
 
       cloudinary.config(auth);
       loggy.info(`[cloudinary] configured for cloud ${auth.cloudName}`);
-    } elif (cloudinaryURL) {
+    } else if (cloudinaryURL) {
       const cloudName = cloudinaryURL.split("@").slice(-1)[0];
       loggy.info(`[cloudinary] configured for cloud ${cloudName}`);
     } else {
@@ -48,19 +48,19 @@ exports = module.exports = class {
   }
 
   onCompile(files, assets) {
-    let startTime = Date.now();
-    let promises = [];
+    const startTime = Date.now();
+    const promises = [];
     let oldBytes = 0;
     let newBytes = 0;
 
-    for (let asset of assets) {
+    for (const asset of assets) {
       if (!this.config.pattern.test(asset.destinationPath)) {
         continue;
       }
 
       promises.push(
         new Promise((resolve, reject) => {
-          let data = Buffer.from(asset.compiled);
+          const data = Buffer.from(asset.compiled);
           oldBytes += data.length;
 
           cloudinary.uploader.upload(
@@ -83,8 +83,8 @@ exports = module.exports = class {
 
     Promise.all(promises)
       .then(() => {
-        let elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-        let saved = prettyBytes(oldBytes - newBytes);
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+        const saved = prettyBytes(oldBytes - newBytes);
 
         loggy.info(
           `[cloudinary] uploaded ${promises.length} ${plur(

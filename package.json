@@ -3,6 +3,7 @@
   "version": "4.0.0",
   "description": "Simple cloudinary uploader for brunch",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "prettify": "prettier --write 'index.js'",
     "lint": "eslint index.js",
